@@ -1,0 +1,110 @@
+int main() {
+    cout << "===== 2048 Game =====" << endl;
+    cout << "Choose board size:" << endl;
+    cout << "1. Classic 4x4" << endl;
+    cout << "2. Big 5x5" << endl;
+    cout << "=====================" << endl;
+
+    int choice;
+    cin >> choice;
+
+    if (choice == 1) {
+        Menny game;
+        string command;
+        
+        cout << "\nControls: wasd (move), save/load (game), scores (highscores), q (quit)\n";
+        game.set_level("medium");
+        game.add_random();
+        game.add_random();
+        game.print();
+
+        while (true) {
+            cout << "\n> ";
+            cin >> command;
+            
+            if (command == "q") break;
+            else if (command == "save") {
+                game.save_game("savegame4.txt");
+            }
+            else if (command == "load") {
+                if (game.load_game("savegame4.txt")) {
+                    game.print();
+                }
+            }
+            else if (command == "scores") {
+                game.show_highscores();
+            }
+            else if (command == "w" || command == "a" || command == "s" || command == "d") {
+                game.update(command);
+                game.add_random();
+                game.print();
+                
+                string status = game.check();
+                if (status.find("2048") != string::npos) {
+                    game.save_highscore();
+                    cout << "Congratulations! You won!" << endl;
+                    break;
+                } else if (status == "lose") {
+                    game.save_highscore();
+                    cout << "Game Over!" << endl;
+                    break;
+                }
+            }
+            else {
+                cout << "Invalid command!" << endl;
+            }
+        }
+    }
+    else if (choice == 2) {
+        BigMennyPlus game;
+        string command;
+        
+        cout << "\nControls: wasd (move), save/load (game), scores (highscores), q (quit)\n";
+        game.set_level("medium");
+        game.add_random();
+        game.add_random();
+        game.print();
+
+        while (true) {
+            cout << "\n> ";
+            cin >> command;
+            
+            if (command == "q") break;
+            else if (command == "save") {
+                game.save_game("savegame5.txt");
+            }
+            else if (command == "load") {
+                if (game.load_game("savegame5.txt")) {
+                    game.print();
+                }
+            }
+            else if (command == "scores") {
+                game.show_highscores();
+            }
+            else if (command == "w" || command == "a" || command == "s" || command == "d") {
+                game.update(command);
+                game.add_random();
+                game.print();
+                
+                string status = game.check();
+                if (status.find("4096") != string::npos) {
+                    game.save_highscore();
+                    cout << "Congratulations! You won!" << endl;
+                    break;
+                } else if (status == "lose") {
+                    game.save_highscore();
+                    cout << "Game Over!" << endl;
+                    break;
+                }
+            }
+            else {
+                cout << "Invalid command!" << endl;
+            }
+        }
+    }
+    else {
+        cout << "Invalid choice!" << endl;
+    }
+
+    return 0;
+}
